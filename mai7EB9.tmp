@@ -61,8 +61,5 @@ script = ExtResource("6_017ts")
 [node name="NetworkDisconnectingState" type="Node" parent="NetworkFSM"]
 script = ExtResource("7_dvf4c")
 
-[node name="NetworkClosingConnectionState" type="Node" parent="NetworkFSM"]
-script = ExtResource("7_dvf4c")
-
 [connection signal="pressed" from="AspectRatioContainer/GridContainer/btn_Connect" to="." method="_on_connect_pressed"]
 [connection signal="pressed" from="AspectRatioContainer/GridContainer/btn_Quit" to="." method="_on_quit_pressed"]

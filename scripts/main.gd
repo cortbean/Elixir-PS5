@@ -14,6 +14,7 @@ func _process(delta):
 
 # Signals functions
 func _on_quit_pressed():
+	$NetworkFSM.current_state = $NetworkFSM/NetworkClosingConnectionState
 	get_tree().quit()
 
 func _on_connect_pressed():
@@ -26,5 +27,3 @@ func _on_connect_pressed():
 		get_node("NetworkFSM").current_state = $NetworkFSM/NetworkInitState
 	else:
 		get_node("AspectRatioContainer/GridContainer/lb_ConnectionStatusPackets").text = "Wrong IP Address!"
-
-	NetworkIPAddrRegex.clear()
