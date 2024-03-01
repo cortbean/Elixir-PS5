@@ -19,11 +19,14 @@ func _on_quit_pressed():
 
 func _on_connect_pressed():
 	# IP address REGEX before starting connection
-	var RegexResult = NetworkIPAddrRegex.search_all(get_node("AspectRatioContainer/GridContainer/le_IpAdress").text)
-	if RegexResult.size() > 0:
-		# Disable button before having a connection
-		get_node("AspectRatioContainer/GridContainer/btn_Connect").disabled = true
-		get_node("AspectRatioContainer/GridContainer/lb_ConnectionStatusPackets").text = "Connecting"
-		get_node("NetworkFSM").current_state = $NetworkFSM/NetworkInitState
+	if get_node("AspectRatioContainer/GridContainer/btn_Connect").text == "Disconnect":
+		$NetworkFSM.current_state = $NetworkFSM/NetworkClosingConnectionState
 	else:
-		get_node("AspectRatioContainer/GridContainer/lb_ConnectionStatusPackets").text = "Wrong IP Address!"
+		var RegexResult = NetworkIPAddrRegex.search_all(get_node("AspectRatioContainer/GridContainer/le_IpAdress").text)
+		if RegexResult.size() > 0:
+			# Disable button before having a connection
+			get_node("AspectRatioContainer/GridContainer/btn_Connect").disabled = true
+			get_node("AspectRatioContainer/GridContainer/lb_ConnectionStatusPackets").text = "Connecting"
+			get_node("NetworkFSM").current_state = $NetworkFSM/NetworkInitState
+		else:
+			get_node("AspectRatioContainer/GridContainer/lb_ConnectionStatusPackets").text = "Wrong IP Address!"
