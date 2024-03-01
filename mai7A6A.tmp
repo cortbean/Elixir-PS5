@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bk5l7umgip4v5"]
+[gd_scene load_steps=9 format=3 uid="uid://bk5l7umgip4v5"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_eka3w"]
+[ext_resource type="Script" path="res://scripts/bridge_rpi.gd" id="2_dvwrd"]
 [ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="2_wl1fq"]
 [ext_resource type="Script" path="res://scripts/fsm/NetworkInitState.gd" id="3_lglb8"]
 [ext_resource type="Script" path="res://scripts/fsm/NetworkWaitingState.gd" id="4_s7v0d"]
@@ -42,23 +43,26 @@ text = "Disconnected"
 layout_mode = 2
 text = "Quit"
 
-[node name="NetworkFSM" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+[node name="NetworkNode" type="Node" parent="."]
+script = ExtResource("2_dvwrd")
+
+[node name="NetworkFSM" type="Node" parent="NetworkNode" node_paths=PackedStringArray("current_state")]
 script = ExtResource("2_wl1fq")
 current_state = NodePath("NetworkWaitingState")
 
-[node name="NetworkInitState" type="Node" parent="NetworkFSM"]
+[node name="NetworkInitState" type="Node" parent="NetworkNode/NetworkFSM"]
 script = ExtResource("3_lglb8")
 
-[node name="NetworkWaitingState" type="Node" parent="NetworkFSM"]
+[node name="NetworkWaitingState" type="Node" parent="NetworkNode/NetworkFSM"]
 script = ExtResource("4_s7v0d")
 
-[node name="NetworkConnectingState" type="Node" parent="NetworkFSM"]
+[node name="NetworkConnectingState" type="Node" parent="NetworkNode/NetworkFSM"]
 script = ExtResource("5_itktg")
 
-[node name="NetworkProcessState" type="Node" parent="NetworkFSM"]
+[node name="NetworkProcessState" type="Node" parent="NetworkNode/NetworkFSM"]
 script = ExtResource("6_017ts")
 
-[node name="NetworkDisconnectingState" type="Node" parent="NetworkFSM"]
+[node name="NetworkDisconnectingState" type="Node" parent="NetworkNode/NetworkFSM"]
 script = ExtResource("7_dvf4c")
 
 [connection signal="pressed" from="AspectRatioContainer/GridContainer/btn_Connect" to="." method="_on_connect_pressed"]
