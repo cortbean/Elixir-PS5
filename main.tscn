@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://bk5l7umgip4v5"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_eka3w"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_eka3w")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+alignment_horizontal = 0
+alignment_vertical = 0
+
+[node name="GridContainer" type="GridContainer" parent="AspectRatioContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="btn_Connect" type="Button" parent="AspectRatioContainer/GridContainer"]
+layout_mode = 2
+text = "Connect"
+
+[node name="le_IpAdress" type="LineEdit" parent="AspectRatioContainer/GridContainer"]
+layout_mode = 2
+placeholder_text = "192.168.13.XX"
+expand_to_text_length = true
+context_menu_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+selecting_enabled = false
+
+[node name="lb_ConnectionStatusPackets" type="Label" parent="AspectRatioContainer/GridContainer"]
+layout_mode = 2
+text = "Disconnected"
+
+[node name="btn_Quit" type="Button" parent="AspectRatioContainer/GridContainer"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="AspectRatioContainer/GridContainer/btn_Connect" to="." method="_on_connect_pressed"]
+[connection signal="pressed" from="AspectRatioContainer/GridContainer/btn_Quit" to="." method="_on_quit_pressed"]
