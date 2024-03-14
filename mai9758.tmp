@@ -1,17 +1,14 @@
-[gd_scene load_steps=16 format=3 uid="uid://bk5l7umgip4v5"]
+[gd_scene load_steps=14 format=3 uid="uid://bk5l7umgip4v5"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id="1_eka3w"]
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_eka3w"]
 [ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="2_wl1fq"]
 [ext_resource type="Script" path="res://scripts/fsm/NetworkInitState.gd" id="3_lglb8"]
 [ext_resource type="Script" path="res://scripts/fsm/NetworkWaitingState.gd" id="4_s7v0d"]
 [ext_resource type="Script" path="res://scripts/fsm/NetworkConnectingState.gd" id="5_itktg"]
 [ext_resource type="Script" path="res://scripts/fsm/NetworkProcessState.gd" id="6_017ts"]
+[ext_resource type="Script" path="res://scripts/fsm/NetworkDisconnectingState.gd" id="7_dvf4c"]
 [ext_resource type="PackedScene" uid="uid://dhw27gk6nbfgu" path="res://assets/3d/uploads_files_2176038_SHC+Free+Cybertruck/SHC Free Cybertruck.blend" id="8_q3755"]
-[ext_resource type="Script" path="res://scripts/picar_raycast.gd" id="9_3qj3x"]
-[ext_resource type="PackedScene" uid="uid://xroxh5wjbwp6" path="res://line_follower_sensor.tscn" id="9_a0528"]
-[ext_resource type="PackedScene" uid="uid://dqyqvjlhtgfjk" path="res://line_follower_collision_segment_scene.tscn" id="9_ecuwe"]
-
-[sub_resource type="GDScript" id="GDScript_d2gei"]
+[ext_resource type="Script" path="res://assets/3d/uploads_files_2176038_SHC+Free+Cybertruck/raytracing.gd" id="9_d5yxd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y2p80"]
 albedo_color = Color(1, 0, 1, 1)
@@ -34,7 +31,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0100098, 0.0284071, -0.013
 script = ExtResource("1_eka3w")
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
-visible = false
 offset_right = 1920.0
 offset_bottom = 1080.0
 alignment_horizontal = 0
@@ -83,38 +79,31 @@ script = ExtResource("5_itktg")
 script = ExtResource("6_017ts")
 
 [node name="NetworkDisconnectingState" type="Node" parent="NetworkFSM"]
-script = SubResource("GDScript_d2gei")
+script = ExtResource("7_dvf4c")
+
+[node name="NetworkClosingConnectionState" type="Node" parent="NetworkFSM"]
+script = ExtResource("7_dvf4c")
 
 [node name="Floor" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.053, -0.25, -0.027)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0527887, -0.0166998, -0.0265913)
 size = Vector3(5, 0.5, 5)
 material = SubResource("StandardMaterial3D_y2p80")
 
 [node name="PiCar" parent="." instance=ExtResource("8_q3755")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.00088, 0.00459908, -0.0139039)
-script = ExtResource("9_3qj3x")
-
-[node name="RayCast3D" type="RayCast3D" parent="PiCar"]
-transform = Transform3D(-7.39508e-06, 1, 0, -1, -7.39508e-06, 0, 0, 0, 1, 3.57628e-07, 0.0479315, -0.0380392)
-hit_from_inside = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.25, 0)
+script = ExtResource("9_d5yxd")
 
 [node name="Camera3D" type="Camera3D" parent="PiCar"]
 transform = Transform3D(-4.37114e-08, -0.258819, 0.965926, 0, 0.965926, 0.258819, -1, 1.13133e-08, -4.2222e-08, 2, 1, 0)
 current = true
 
-[node name="line_follower_sensor" parent="PiCar" instance=ExtResource("9_a0528")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.169688, 0.0671181, -7.45058e-09)
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_c8ocf")
 
 [node name="Wall" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.497665, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.73985, 0)
 use_collision = true
 size = Vector3(0.1, 1, 1)
-
-[node name="Line_segment_node_1" parent="." instance=ExtResource("9_ecuwe")]
-transform = Transform3D(-0.010018, 0, -0.99995, 0, 1, 0, 0.99995, 0, -0.010018, 1.75, 0, 0)
 
 [connection signal="pressed" from="AspectRatioContainer/GridContainer/btn_Connect" to="." method="_on_connect_pressed"]
 [connection signal="pressed" from="AspectRatioContainer/GridContainer/btn_Quit" to="." method="_on_quit_pressed"]

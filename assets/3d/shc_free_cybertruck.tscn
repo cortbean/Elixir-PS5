@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c7x3mfr0i6i6t"]
-
-[ext_resource type="PackedScene" uid="uid://dhw27gk6nbfgu" path="res://assets/3d/uploads_files_2176038_SHC+Free+Cybertruck/SHC Free Cybertruck.blend" id="1_bmpxn"]
-
-[node name="SHC Free Cybertruck" instance=ExtResource("1_bmpxn")]
-
-[node name="Plane" parent="." index="5"]
-visible = false
