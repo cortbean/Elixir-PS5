@@ -91,11 +91,12 @@ size = Vector3(5, 0.5, 5)
 material = SubResource("StandardMaterial3D_y2p80")
 
 [node name="PiCar" parent="." instance=ExtResource("8_q3755")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.00088, 0.00459908, -0.0139039)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.37917, -0.00316979, 0.102316)
 script = ExtResource("9_3qj3x")
 
 [node name="RayCast3D" type="RayCast3D" parent="PiCar"]
-transform = Transform3D(-7.39508e-06, 1, 0, -1, -7.39508e-06, 0, 0, 0, 1, 3.57628e-07, 0.0479315, -0.0380392)
+transform = Transform3D(-7.39508e-06, 1, 0, -1, -7.39508e-06, 0, 0, 0, 1, 0, 0.048, 0)
+target_position = Vector3(0, -5, 0)
 hit_from_inside = true
 
 [node name="Camera3D" type="Camera3D" parent="PiCar"]
@@ -114,7 +115,13 @@ use_collision = true
 size = Vector3(0.1, 1, 1)
 
 [node name="Line_segment_node_1" parent="." instance=ExtResource("9_ecuwe")]
-transform = Transform3D(-0.010018, 0, -0.99995, 0, 1, 0, 0.99995, 0, -0.010018, 1.75, 0, 0)
+transform = Transform3D(-0.268483, 0, -0.963285, 0, 1, 0, 0.963285, 0, -0.268483, 1.75, 0, 0)
+
+[node name="Line_segment_node_1" parent="Line_segment_node_1" instance=ExtResource("9_ecuwe")]
+transform = Transform3D(-0.62388, 0, -0.781521, 0, 1, 0, 0.781521, 0, -0.62388, 0.372, 0, 0.789)
+
+[node name="Line_segment_node_2" parent="Line_segment_node_1" instance=ExtResource("9_ecuwe")]
+transform = Transform3D(-0.999099, 0, 0.0424689, 0, 1, 0, -0.0424689, 0, -0.999099, 0.73, 0, 1.582)
 
 [connection signal="pressed" from="AspectRatioContainer/GridContainer/btn_Connect" to="." method="_on_connect_pressed"]
 [connection signal="pressed" from="AspectRatioContainer/GridContainer/btn_Quit" to="." method="_on_quit_pressed"]

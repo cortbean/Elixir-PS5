@@ -11,5 +11,5 @@ layers = 2
 use_collision = true
 collision_layer = 2
 collision_mask = 2
-size = Vector3(0.0277351, 0.01, 0.178)
+size = Vector3(0.028, 0.01, 1)
 material = SubResource("StandardMaterial3D_uxfl2")

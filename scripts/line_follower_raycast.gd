@@ -1,6 +1,7 @@
 extends Area3D
 
-@export var line_follower_array = [1,1,1,1,1]
+
+@export var line_follower_array: PackedByteArray = [1,1,1,1,1]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
