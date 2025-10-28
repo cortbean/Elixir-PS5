@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bxh02m00uaty3" path="res://scripts/fsm/NetworkConnectingState.gd" id="5_itktg"]
 [ext_resource type="Script" uid="uid://bc4g0fv1b3qge" path="res://scripts/fsm/NetworkProcessState.gd" id="6_017ts"]
 [ext_resource type="PackedScene" uid="uid://byj45xn4tx86d" path="res://assets/PiCar.blend" id="8_5vw27"]
+[ext_resource type="PackedScene" uid="uid://c3bj3uyvxryk7" path="res://parcours.tscn" id="8_kek77"]
 [ext_resource type="PackedScene" uid="uid://xroxh5wjbwp6" path="res://line_follower_sensor.tscn" id="9_a0528"]
 
 [sub_resource type="GDScript" id="GDScript_d2gei"]
@@ -27,10 +28,7 @@ sky_material = SubResource("ProceduralSkyMaterial_jv41d")
 background_mode = 2
 sky = SubResource("Sky_nfout")
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_iys2i"]
-
 [node name="Main" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0100098, 0.0284071, -0.0135775)
 script = ExtResource("1_eka3w")
 
 [node name="NetworkFSM" type="Node" parent="." node_paths=PackedStringArray("current_state")]
@@ -52,22 +50,17 @@ script = ExtResource("6_017ts")
 [node name="NetworkDisconnectingState" type="Node" parent="NetworkFSM"]
 script = SubResource("GDScript_d2gei")
 
+[node name="Node3D" parent="NetworkFSM" instance=ExtResource("9_a0528")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.755514, 0.132061, 0.0333229)
+
 [node name="Floor" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.053, -0.25, -0.027)
 size = Vector3(5, 0.5, 5)
 material = SubResource("StandardMaterial3D_y2p80")
 
-[node name="PiCar#RayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(-7.39508e-06, 1, 0, -1, -7.39508e-06, 0, 0, 0, 1, 0, 0.048, 0)
-target_position = Vector3(0, -0.8, 0)
-hit_from_inside = true
-
 [node name="PiCar#Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.258819, 0.965926, 0, 0.965926, 0.258819, -1, 1.13133e-08, -4.2222e-08, 2, 1, 0)
 current = true
-
-[node name="PiCar#line_follower_sensor" parent="." instance=ExtResource("9_a0528")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.166544, 0.0646156, 0.00079032)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_c8ocf")
@@ -104,25 +97,14 @@ text = "Connect"
 layout_mode = 2
 text = "Quit"
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.33023, 0.0713751, 0.100219)
-size = Vector3(0.1, 0.1, 0.1)
-
-[node name="Bille" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, -4.47035e-08, 0, 1, 0, 4.47035e-08, 0, 1, 1.99787, 0.205514, -0.300465)
-mass = 0.1
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Bille"]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
-shape = SubResource("SphereShape3D_iys2i")
-
-[node name="CSGSphere3D" type="CSGSphere3D" parent="Bille"]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, -0.0329106, 0)
-radial_segments = 32
-rings = 32
+[node name="parcours" parent="." instance=ExtResource("8_kek77")]
+transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0.415292, 0, 0)
 
 [node name="PiCar" parent="." instance=ExtResource("8_5vw27")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.469947, -0.0284071, 0.638695)
+transform = Transform3D(-0.0170336, 0, -0.999855, 0, 1, 0, 0.999855, 0, -0.0170336, 0.588632, 0.0215286, -0.602404)
+
+[node name="line_follower" parent="." instance=ExtResource("9_a0528")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.59514, 0.0175924, -0.289101)
 
 [connection signal="toggled" from="GridContainer/CheckBox" to="." method="_on_check_box_toggled"]
 [connection signal="pressed" from="GridContainer/btn_Connect" to="." method="_on_connect_pressed"]
