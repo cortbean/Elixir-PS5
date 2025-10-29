@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bk5l7umgip4v5"]
+[gd_scene load_steps=13 format=3 uid="uid://bk5l7umgip4v5"]
 
 [ext_resource type="Script" uid="uid://tq58jihq45r4" path="res://scripts/main.gd" id="1_eka3w"]
 [ext_resource type="Script" uid="uid://xfwg5cs2hgt0" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="2_wl1fq"]
