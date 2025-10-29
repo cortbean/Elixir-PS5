@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+@onready var line_detector = $line_follower/sensor_array
+
 # Rotation
 var rayon: float = 1.0
 var vitesse_angulaire: float = 0.0
@@ -39,6 +41,9 @@ func _get_input(delta:float):
 		avancer = not avancer
 	if Input.is_action_pressed("Tourner"):
 		_ajouter_angle(delta, 5.0)
+	if Input.is_action_pressed("Follow"):
+		_suivre_ligne(delta)
+		_avancer(delta)
 
 func _rotation_angle(delta:float) -> void:
 	if rotationne:
@@ -137,3 +142,35 @@ func _ajouter_angle(delta:float, angle:float, vitesse_rotation: float = 90.0) ->
 		if abs(rotation) > abs(angle):
 			rotation = angle
 		rotate_y(deg_to_rad(rotation))
+		
+func _suivre_ligne(delta: float) -> void:
+	var sensor = line_detector.line_follower_array
+	
+	if sensor[2] == 1:
+		avancer = true
+		rotationne = false
+	elif sensor[0] == 1 :
+		avancer = true
+		rotationne = true
+		tourne_gauche = true
+		_ajouter_angle(delta, 100, 360)
+	elif sensor[1] == 1:
+		avancer = true
+		rotationne = true
+		tourne_gauche = true
+		_ajouter_angle(delta, 30, 360)
+	elif sensor[3] == 1:
+		avancer = true
+		rotationne = true
+		tourne_gauche = false
+		_ajouter_angle( delta, 30, 360)
+	elif sensor[4] == 1:
+		avancer = true
+		rotationne = true
+		tourne_gauche = false
+		_ajouter_angle(delta, 100, 360)
+	else:
+		avancer = false
+		rotationne = false
+	
+	
