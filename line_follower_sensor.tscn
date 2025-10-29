@@ -5,7 +5,7 @@
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_chp8o"]
 length = 0.775414
 
-[node name="Node3D" type="Node3D"]
+[node name="line_follower" type="Node3D"]
 
 [node name="sensor_array" type="Area3D" parent="."]
 collision_layer = 2
