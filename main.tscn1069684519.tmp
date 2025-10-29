@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bk5l7umgip4v5"]
+[gd_scene load_steps=17 format=3 uid="uid://bk5l7umgip4v5"]
 
 [ext_resource type="Script" uid="uid://tq58jihq45r4" path="res://scripts/main.gd" id="1_eka3w"]
 [ext_resource type="Script" uid="uid://xfwg5cs2hgt0" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="2_wl1fq"]
@@ -10,9 +10,11 @@
 [ext_resource type="PackedScene" uid="uid://byj45xn4tx86d" path="res://assets/PiCar.blend" id="8_5vw27"]
 [ext_resource type="PackedScene" uid="uid://xroxh5wjbwp6" path="res://line_follower_sensor.tscn" id="9_a0528"]
 [ext_resource type="PackedScene" uid="uid://d1snkvvda4vrh" path="res://assets/plaquette_blender_scale.blend" id="9_kek77"]
-[ext_resource type="PackedScene" uid="uid://difir3bb2pwv4" path="res://assets/parcours.blend" id="11_efxa6"]
 
 [sub_resource type="GDScript" id="GDScript_d2gei"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y2p80"]
+albedo_color = Color(1, 0, 1, 1)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jv41d"]
 sky_top_color = Color(0.635294, 0.756863, 0.901961, 1)
@@ -29,13 +31,6 @@ sky = SubResource("Sky_nfout")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iys2i"]
 radius = 0.001
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_4c57u"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y2p80"]
-albedo_color = Color(1, 0, 1, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_efxa6"]
 
 [node name="Main" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0100098, 0.0284071, -0.0135775)
@@ -60,15 +55,19 @@ script = ExtResource("6_017ts")
 [node name="NetworkDisconnectingState" type="Node" parent="NetworkFSM"]
 script = SubResource("GDScript_d2gei")
 
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.95552, 0.907793, -4.04075)
+size = Vector3(5, 0.5, 5)
+material = SubResource("StandardMaterial3D_y2p80")
+
 [node name="PiCar#RayCast3D" type="RayCast3D" parent="."]
 transform = Transform3D(-7.39508e-06, 1, 0, -1, -7.39508e-06, 0, 0, 0, 1, 0, 0.048, 0)
 target_position = Vector3(0, -0.8, 0)
 hit_from_inside = true
 
 [node name="PiCar#Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-4.37114e-08, -0.258819, 0.965926, 0, 0.965926, 0.258819, -1, 1.13133e-08, -4.2222e-08, 5.50006, 0.216766, 1.99529)
+transform = Transform3D(-4.37114e-08, -0.258819, 0.965926, 0, 0.965926, 0.258819, -1, 1.13133e-08, -4.2222e-08, 0.708374, 1, 0.895752)
 current = true
-fov = 89.8795
 
 [node name="PiCar#line_follower_sensor" parent="." instance=ExtResource("9_a0528")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.166544, 0.0646156, 0.00079032)
@@ -109,7 +108,7 @@ layout_mode = 2
 text = "Quit"
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.996884, 0.0788767, 0, -0.0788767, 0.996884, -1.30416, 4.63564, 2.6572)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.33023, 0.0713751, 0.100219)
 size = Vector3(0.1, 0.1, 0.1)
 
 [node name="Bille" type="RigidBody3D" parent="."]
@@ -126,36 +125,13 @@ radial_segments = 32
 rings = 32
 
 [node name="Bolide" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.81711, -4.48567, 0.543042)
 script = ExtResource("8_4c57u")
 
 [node name="PiCar" parent="Bolide" instance=ExtResource("8_5vw27")]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -1.23714, -0.0395799, 0.638695)
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -1.2477, -0.0284071, 0.638695)
 
 [node name="plaquette_blender_scale" parent="Bolide" instance=ExtResource("9_kek77")]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -0.863714, 0.2804, 0.640922)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Bolide"]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -1.2076, 0.436765, 0.724536)
-shape = SubResource("BoxShape3D_4c57u")
-
-[node name="DetecteurLigne" parent="Bolide" instance=ExtResource("9_a0528")]
-transform = Transform3D(-2.18557e-07, 0, 5, 0, 5, 0, -5, 0, -2.18557e-07, -0.58732, -0.0477939, 0.639489)
-
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
-
-[node name="Floor" type="CSGBox3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.334533, -1.1858, 0.0425458)
-size = Vector3(5, 0.5, 5)
-material = SubResource("StandardMaterial3D_y2p80")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -0.328643, -3.41053, 0.0897214)
-shape = SubResource("BoxShape3D_efxa6")
-
-[node name="parcours" parent="." instance=ExtResource("11_efxa6")]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 2.54538, -4.71324, 0.141053)
 
 [connection signal="toggled" from="GridContainer/CheckBox" to="." method="_on_check_box_toggled"]
 [connection signal="pressed" from="GridContainer/btn_Connect" to="." method="_on_connect_pressed"]
