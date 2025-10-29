@@ -1,8 +1,5 @@
 extends Node3D
 
-func _process(delta):
-	print(get_distance())
-
 func get_distance():
 	if $RayCast3D.is_colliding():
 		var origin = $RayCast3D.global_transform.origin

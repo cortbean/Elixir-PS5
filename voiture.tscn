@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dm37ns3sl6no2"]
+[gd_scene load_steps=6 format=3 uid="uid://dm37ns3sl6no2"]
 
 [ext_resource type="Script" uid="uid://c6qyhwiu0pwal" path="res://scripts/voiture_deplacement_input.gd" id="1_hs4ok"]
 [ext_resource type="PackedScene" uid="uid://byj45xn4tx86d" path="res://assets/PiCar.blend" id="2_rw1m6"]
+[ext_resource type="PackedScene" uid="uid://gxdbe6qrcfur" path="res://ultrasonic_sensor.tscn" id="3_rw1m6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4c57u"]
 size = Vector3(0.276608, 0.0618744, 0.135986)
@@ -11,10 +12,10 @@ height = 0.135307
 radius = 0.0317383
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 script = ExtResource("1_hs4ok")
 
 [node name="Cybertruck" parent="." instance=ExtResource("2_rw1m6")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="CollisionBody" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00795495, 0.0503856, -0.000186689)
@@ -27,3 +28,6 @@ shape = SubResource("CylinderShape3D_efxa6")
 [node name="CollisionRoueAvant" type="CollisionShape3D" parent="."]
 transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, -0.0710344, 0.0292792, 0.000127896)
 shape = SubResource("CylinderShape3D_efxa6")
+
+[node name="ultrasonic_sensor" parent="." instance=ExtResource("3_rw1m6")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.116087, 0.0485518, 1.10692e-09)
