@@ -1,13 +1,13 @@
 extends CharacterBody3D
 
-@onready var ultrasonic_sensor: Node3D = $ultrasonic_sensor
+@onready var line_detector = $line_follower/sensor_array
 
 # Rotation
 var rayon: float = 1.0
 var vitesse_angulaire: float = 0.0
-var acceleration: float = 0.73575
+var acceleration: float = 0.1 # 0.73575
 var angle: float = 0.0
-var vitesse_maximale: float = 1.0
+var vitesse_maximale: float = 0.5
 var rotationne: bool = false
 
 var centre: Vector3 = Vector3.ZERO
@@ -24,13 +24,16 @@ var position_depart: Vector3
 # Avancer
 var avancer: bool = false
 
+#Suiveur de ligne
+var suivre_ligne_active = false
+
 func _physics_process(delta: float):
 	_get_input(delta)
 	_rotation_angle(delta)
 	_reculer(delta, 0.2)
 	_avancer(delta)
-	var distance = ultrasonic_sensor.get_distance()
-	print("distance :" + str(distance))
+	if suivre_ligne_active:
+		_suivre_ligne(delta)
 
 func _get_input(delta:float):
 	if Input.is_action_just_released("Up"):
@@ -43,6 +46,8 @@ func _get_input(delta:float):
 		avancer = not avancer
 	if Input.is_action_pressed("Tourner"):
 		_ajouter_angle(delta, 5.0)
+	if Input.is_action_just_pressed("Follow"):
+		suivre_ligne_active = not suivre_ligne_active
 
 func _rotation_angle(delta:float) -> void:
 	if rotationne:
@@ -134,10 +139,51 @@ func _avancer(delta:float) -> void:
 			var deplacement = -transform.basis.x * vitesse * delta
 			global_translate(deplacement)
 
-func _ajouter_angle(delta:float, angle:float, vitesse_rotation: float = 90.0) -> void:
+func _ajouter_angle(delta:float, angle:float, vitesse_rotation: float = 180.0) -> void:
 	if avancer and angle != 0:
-		var rotation = sign(angle) * vitesse_rotation * delta
+		angle = deg_to_rad(angle)
+		var rotation = angle * deg_to_rad(vitesse_rotation) * delta
 		
 		if abs(rotation) > abs(angle):
 			rotation = angle
-		rotate_y(deg_to_rad(rotation))
+		rotate_y(rotation)
+		
+func _suivre_ligne(delta: float) -> void:
+	var sensor = line_detector.line_follower_array
+	
+	if 0 not in sensor:
+		avancer = false
+	elif sensor[0] == 1 and sensor[1] == 1:
+		avancer = true
+		_ajouter_angle(delta, 67)
+	elif sensor[1] == 1 and sensor[2] == 1:
+		avancer = true
+		_ajouter_angle(delta, 22)
+	elif sensor[2] == 1 and sensor[3] == 1:
+		avancer = true
+		_ajouter_angle(delta, -22)
+	elif sensor[3] == 1 and sensor[4] == 1:
+		avancer = true
+		_ajouter_angle(delta, -67)
+	elif sensor[2] == 1:
+		avancer = true
+	elif sensor[0] == 1 :
+		avancer = true
+		_ajouter_angle(delta, 90)
+	elif sensor[1] == 1:
+		avancer = true
+		_ajouter_angle(delta, 45)
+	elif sensor[3] == 1:
+		avancer = true
+		_ajouter_angle(delta, -30)
+	elif sensor[4] == 1:
+		avancer = true
+		_ajouter_angle(delta, -90)
+	else:
+		avancer = false
+		# _demarrer_recul(delta)
+	
+func tourner_sur_lui_meme(delta: float, sens_gauche: bool, vitesse_rotation: float = 180.0) -> void:
+	var direction = -1.0 if sens_gauche else 1.0
+	var rotation_degrees = direction * vitesse_rotation * delta
+	rotate_y(deg_to_rad(rotation_degrees))

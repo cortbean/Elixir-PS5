@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dm37ns3sl6no2"]
+[gd_scene load_steps=7 format=3 uid="uid://dm37ns3sl6no2"]
 
 [ext_resource type="Script" uid="uid://c6qyhwiu0pwal" path="res://scripts/voiture_deplacement_input.gd" id="1_hs4ok"]
 [ext_resource type="PackedScene" uid="uid://byj45xn4tx86d" path="res://assets/PiCar.blend" id="2_rw1m6"]
-[ext_resource type="PackedScene" uid="uid://gxdbe6qrcfur" path="res://ultrasonic_sensor.tscn" id="3_rw1m6"]
+[ext_resource type="PackedScene" uid="uid://xroxh5wjbwp6" path="res://line_follower_sensor.tscn" id="3_rw1m6"]
+[ext_resource type="PackedScene" uid="uid://d1snkvvda4vrh" path="res://assets/plaquette_blender_scale.blend" id="4_jk6xw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4c57u"]
 size = Vector3(0.276608, 0.0618744, 0.135986)
@@ -29,5 +30,8 @@ shape = SubResource("CylinderShape3D_efxa6")
 transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, -0.0710344, 0.0292792, 0.000127896)
 shape = SubResource("CylinderShape3D_efxa6")
 
-[node name="ultrasonic_sensor" parent="." instance=ExtResource("3_rw1m6")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.116087, 0.0485518, 1.10692e-09)
+[node name="line_follower" parent="." instance=ExtResource("3_rw1m6")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.134896, 0.0177612, 0.000530799)
+
+[node name="plaquette_blender_scale" parent="." instance=ExtResource("4_jk6xw")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.0739025, 0.0610223, -0.00111848)

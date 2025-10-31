@@ -6,9 +6,9 @@
 [ext_resource type="Script" uid="uid://ohex7sfx3l0p" path="res://scripts/fsm/NetworkWaitingState.gd" id="4_s7v0d"]
 [ext_resource type="Script" uid="uid://bxh02m00uaty3" path="res://scripts/fsm/NetworkConnectingState.gd" id="5_itktg"]
 [ext_resource type="Script" uid="uid://bc4g0fv1b3qge" path="res://scripts/fsm/NetworkProcessState.gd" id="6_017ts"]
-[ext_resource type="PackedScene" uid="uid://byj45xn4tx86d" path="res://assets/PiCar.blend" id="8_5vw27"]
 [ext_resource type="PackedScene" uid="uid://c3bj3uyvxryk7" path="res://parcours.tscn" id="8_kek77"]
 [ext_resource type="PackedScene" uid="uid://xroxh5wjbwp6" path="res://line_follower_sensor.tscn" id="9_a0528"]
+[ext_resource type="PackedScene" uid="uid://dm37ns3sl6no2" path="res://voiture.tscn" id="10_4c57u"]
 
 [sub_resource type="GDScript" id="GDScript_d2gei"]
 
@@ -59,8 +59,9 @@ size = Vector3(5, 0.5, 5)
 material = SubResource("StandardMaterial3D_y2p80")
 
 [node name="PiCar#Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-4.37114e-08, -0.258819, 0.965926, 0, 0.965926, 0.258819, -1, 1.13133e-08, -4.2222e-08, 2, 1, 0)
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, -0.0367136, 1, -0.0118414)
 current = true
+fov = 111.699
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_c8ocf")
@@ -100,11 +101,11 @@ text = "Quit"
 [node name="parcours" parent="." instance=ExtResource("8_kek77")]
 transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, 0.415292, 0, 0)
 
-[node name="PiCar" parent="." instance=ExtResource("8_5vw27")]
-transform = Transform3D(-0.0170336, 0, -0.999855, 0, 1, 0, 0.999855, 0, -0.0170336, 0.588632, 0.0215286, -0.602404)
-
 [node name="line_follower" parent="." instance=ExtResource("9_a0528")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.59514, 0.0175924, -0.289101)
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("10_4c57u")]
+transform = Transform3D(-0.999994, 0, -0.00352552, 0, 1, 0, 0.00352552, 0, -0.999994, -1.0476, 0, 0.950695)
 
 [connection signal="toggled" from="GridContainer/CheckBox" to="." method="_on_check_box_toggled"]
 [connection signal="pressed" from="GridContainer/btn_Connect" to="." method="_on_connect_pressed"]
