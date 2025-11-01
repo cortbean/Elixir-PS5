@@ -29,8 +29,8 @@ func _physics_process(delta: float):
 	_rotation_angle(delta)
 	_reculer(delta, 0.2)
 	_avancer(delta)
-	var distance = ultrasonic_sensor.get_distance()
-	print("distance :" + str(distance))
+	# var distance = ultrasonic_sensor.get_distance()
+	# print("distance :" + str(distance))
 
 func _get_input(delta:float):
 	if Input.is_action_just_released("Up"):
